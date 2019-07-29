@@ -178,18 +178,24 @@ overflow:auto;
 ::-webkit-scrollbar { 
     display: none; 
 }
+
+justify-content:center;
 width:200px;
 
 `;
 const Divvv=styled.div`
+border-radius:10px;
 
-
-max-width:200px;
+margin-left:50px;
+max-width:600px;
 height:auto;
-background-color:#40a9ff;
+background-color:#6d6d6d;
 color:#fff;
+display:flex;
+justify-content:center;
+text-align:center;
 
-padding:3px;
+padding:5px;
 `;
 
 
@@ -198,6 +204,15 @@ const Box = () => {
     const [del, setdel] = useState(false);
     const [count, setcount] = useState(50);
     const [getvalue, setvalue] = useState(1);
+    const [linkn,setlinkn]=useState("");
+
+    const linkf=(k)=>{
+        setmodl(!modl);
+        setlinkn(k);
+
+    }
+
+
 
     const { Search } = Input;
     const array = Arraydtu;
@@ -215,10 +230,10 @@ const Box = () => {
         console.log("entered in messagesarray")
         if(index===getvalue){
             console.log("entered in if ")
-            str.anony.map((mess,ind)=>{
+            return(str.anony.map((mess,ind)=>{
                 console.log(mess)
-                return(<div>{mess}</div>);
-            })
+                return(<div><Divvv>{mess}</Divvv> <br></br></div>);
+            }))
         }
                 
 
@@ -254,16 +269,16 @@ const Box = () => {
                         </Popover>
                     </Divc>
                     <div style={{ paddingLeft: "21%", paddingRight: "15%" }}>
-                        <Button type="primary" style={{ "backgroundColor": "#0077b5", borderColor: "#0077b5", width: "30px", padding: "1%", margin: "6%" }} onClick={() => { setmodl(!modl) }}><Icon type="linkedin" style={{ color: "#fff", fontSize: "20px" }} theme="filled" /></Button>
-                        <Button type="primary" style={{ "backgroundColor": "#4267b2", borderColor: "#4267b2", width: "30px", padding: "1%", margin: "6%" }} onClick={() => { setmodl(!modl) }}><Icon type="facebook" style={{ color: "#fff", fontSize: "20px" }} theme="filled" /></Button>
-                        <Button type="primary" style={{ "backgroundColor": "#df0043", borderColor: "#df0043", width: "30px", padding: "1%", margin: "6%" }} onClick={() => { setmodl(!modl) }}><Icon type="instagram" style={{ color: "#fff", fontSize: "20px" }} theme="filled" /></Button>
+                        <Button type="primary" style={{ "backgroundColor": "#0077b5", borderColor: "#0077b5", width: "30px", padding: "1%", margin: "6%" }} onClick={()=>{linkf("linkedin")}}><Icon type="linkedin" style={{ color: "#fff", fontSize: "20px" }} theme="filled" /></Button>
+                        <Button type="primary" style={{ "backgroundColor": "#4267b2", borderColor: "#4267b2", width: "30px", padding: "1%", margin: "6%" }} onClick={()=>{linkf("facebook")}}><Icon type="facebook" style={{ color: "#fff", fontSize: "20px" }} theme="filled" /></Button>
+                        <Button type="primary" style={{ "backgroundColor": "#df0043", borderColor: "#df0043", width: "30px", padding: "1%", margin: "6%" }} onClick={()=>{linkf("instagram")}}><Icon type="instagram" style={{ color: "#fff", fontSize: "20px" }} theme="filled" /></Button>
                         <Modal
                             title="Basic Modal"
                             visible={modl}
                             onOk={() => { setmodl(!modl) }}
                             onCancel={() => { setmodl(!modl) }}
                         >
-                            <Input placeholder="www.facebook.com/xdreakster"></Input>
+                            <Input placeholder={`${linkn}`}></Input>
                         </Modal>
                     </div>
                     <Button style={{ "backgroundColor": "#f2003c", width: "100%", borderRadius: "0px", color: "white", marginTop: "20px" }} onClick={() => { setdel(!del) }}><i class="fas fa-trash" style={{ color: "#fff", fontSize: "15px", marginRight: "10px" }} ></i>  DELETE PROFILE</Button>
