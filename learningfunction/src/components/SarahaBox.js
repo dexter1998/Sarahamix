@@ -205,17 +205,35 @@ const Box = () => {
     const [count, setcount] = useState(50);
     const [getvalue, setvalue] = useState(1);
     const [linkn,setlinkn]=useState("");
+    const [messages,setmessages]=useState("");
 
+    const messs=(e)=>{
+        setmessages(e.target.value);
+    }
+
+    const addmessage=()=>{
+        array.map((str,index)=>{
+            
+           
+            if(index===getvalue){
+              
+                setarray([...str.anony,{messages}]);
+                
+            }
+        })
+    }
+
+   
     const linkf=(k)=>{
         setmodl(!modl);
         setlinkn(k);
 
     }
 
-
+    const [array,setarray]=useState(Arraydtu);
 
     const { Search } = Input;
-    const array = Arraydtu;
+    
     const ArrayItems = array.map((str, index) => {
 
         return (
@@ -227,11 +245,11 @@ const Box = () => {
     );
 
     const messagesarray=array.map((str,index)=>{
-        console.log("entered in messagesarray")
+       
         if(index===getvalue){
-            console.log("entered in if ")
+            
             return(str.anony.map((mess,ind)=>{
-                console.log(mess)
+                
                 return(<div><Divvv>{mess}</Divvv> <br></br></div>);
             }))
         }
@@ -332,8 +350,9 @@ const Box = () => {
                 <Divf>
                     <div style={{ boxShadow: "0px 0px 8px rgba(0,0,0,0.1)", marginTop: "0.5%", borderRadius: "20px", borderWidth: "thin", width: "95%" }}>
                         <Button shape="circle" style={{ borderColor: "#fff", marginLeft: "2%", marginTop: "0.3%" }} ><Icon type="smile" /></Button>
-                        <Input type="text" placeholder="Type a message.." style={{ width: "75%", borderColor: "white", boxShadow: "none", marginLeft: "2.5%" }} />
-                        <Button shape="circle" style={{ borderColor: "#fff", marginLeft: "4.5%", marginTop: "0.3%" }}><i class="fas fa-paper-plane" ></i></Button>
+                        <Input type="text" placeholder="Type a message.." style={{ width: "75%", borderColor: "white", boxShadow: "none", marginLeft: "2.5%" }}  onChange={messs} />
+                        <Button onClick={addmessage} shape="circle" style={{ borderColor: "#fff", marginLeft: "4.5%", marginTop: "0.3%" }}><i class="fas fa-paper-plane" ></i></Button>
+                        {console.log(messages)}
                     </div>
 
                 </Divf>
