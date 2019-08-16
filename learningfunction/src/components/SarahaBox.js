@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import 'antd/dist/antd.css';
 import styled from 'styled-components'
 // https://onaircode.com/wp-content/uploads/2017/11/Constellation.jpg
-import { Avatar, Input, Radio, Button, Modal, Icon, Badge, Popover, Search } from 'antd';
+import { Avatar, Input, Radio, Button, Modal, Icon, Badge, Popover, Search,notification,Card,Meta,Drawer,Rate,Upload,message  } from 'antd';
 import Arraydtu from './class.json'
 import EmojiPicker from 'emoji-picker-react';
 import Dp from './0981.png'
@@ -207,22 +207,49 @@ const Box = () => {
     const [linkn,setlinkn]=useState("");
     const [messages,setmessages]=useState("");
 
-    const messs=(e)=>{
-        setmessages(e.target.value);
-    }
+    const propss = {
+        name: 'file',
+        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        headers: {
+          authorization: 'authorization-text',
+        },
+        onChange(info) {
+          if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+          }
+          if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+          } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+          }
+        },
+      };
 
     const addmessage=()=>{
-        array.map((str,index)=>{
-            
-           
-            if(index===getvalue){
-              
-                setarray([...str.anony,{messages}]);
-                
-            }
-        })
+        const temp=[...array];
+        temp[getvalue].anony=[...temp[getvalue].anony,messages];
+        setarray(temp);
+        setmessages("");
     }
 
+    const { TextArea } = Input;
+const [torf,setTorf]=useState(false);
+const [torff,setTorff]=useState(false);
+
+const func=()=>{
+
+  setTorf(!torf);
+
+  
+  notification.open({
+    placement:'bottomRight',
+    message: 'Notification Title',
+    description:
+      'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+      icon: <Icon type="smile" style={{ color: '#108ee9' }} />
+  });
+
+}
    
     const linkf=(k)=>{
         setmodl(!modl);
@@ -244,18 +271,10 @@ const Box = () => {
 
     );
 
-    const messagesarray=array.map((str,index)=>{
-       
-        if(index===getvalue){
-            
-            return(str.anony.map((mess,ind)=>{
-                
+    const messagesarray=array[getvalue].anony.map((mess,ind)=>{
                 return(<div><Divvv>{mess}</Divvv> <br></br></div>);
-            }))
-        }
-                
-
-    })
+            }
+         )
 
     const content = (
         <div>
@@ -306,7 +325,11 @@ const Box = () => {
                         onOk={() => { setdel(!del) }}
                         onCancel={() => { setdel(!del) }}
                     >
-                        <Input placeholder=""></Input>
+                        <Upload {...propss}>
+                           <Button>
+                             <Icon type="upload" /> Click to Upload
+                          </Button>
+                         </Upload>
                     </Modal>
                 </Bottom>
             </Div4>)
@@ -316,7 +339,8 @@ const Box = () => {
 
     })
 
-    return (
+    return (<div>
+    
         <Div3 style={{ position: "absolute" }}>
             <Div1 >
                 <Divs >
@@ -350,9 +374,8 @@ const Box = () => {
                 <Divf>
                     <div style={{ boxShadow: "0px 0px 8px rgba(0,0,0,0.1)", marginTop: "0.5%", borderRadius: "20px", borderWidth: "thin", width: "95%" }}>
                         <Button shape="circle" style={{ borderColor: "#fff", marginLeft: "2%", marginTop: "0.3%" }} ><Icon type="smile" /></Button>
-                        <Input type="text" placeholder="Type a message.." style={{ width: "75%", borderColor: "white", boxShadow: "none", marginLeft: "2.5%" }}  onChange={messs} />
+                        <Input type="text" placeholder="Type a message.." style={{ width: "75%", borderColor: "white", boxShadow: "none", marginLeft: "2.5%" }} value={messages} onChange={(e) => setmessages(e.target.value)} />
                         <Button onClick={addmessage} shape="circle" style={{ borderColor: "#fff", marginLeft: "4.5%", marginTop: "0.3%" }}><i class="fas fa-paper-plane" ></i></Button>
-                        {console.log(messages)}
                     </div>
 
                 </Divf>
@@ -366,6 +389,54 @@ const Box = () => {
 
 
         </Div3>
+        <Button  style={{ marginLeft:"570px",marginTop: "600px",position:"absolute" }} onClick={()=>setTorff(!torff)}>About</Button>
+      <Button  style={{ marginLeft:"650px",marginTop: "600px",position:"absolute" }} onClick={()=>setTorf(!torf)}>Feedback</Button>
+      <Drawer
+        title="Feedback"
+
+        closable={true}
+        placement="right"
+        visible={torf}
+        onClose={()=>setTorf(!torf)}
+      >
+        <Input style={{ width: "100%" }}
+          placeholder="Enter your name"
+          prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+
+        />
+        <Input placeholder="2K**//***" style={{ marginTop: "20px" }}></Input>
+
+        <TextArea rows={4} placeholder="Some words from you..." style={{ marginTop: "20px" }} />
+
+        <Rate allowHalf defaultValue={2.5} style={{ marginTop: "20px" }} />
+
+        <Button type="primary" style={{ marginTop: "20px" }} onClick={func}>Submit</Button>
+      </Drawer>
+     
+      <Drawer
+        title="About"
+
+        closable={true}
+        placement="left"
+        visible={torff}
+        onClose={()=>setTorff(!torff)}
+      >
+        <Card
+   
+    style={{ width: "100% "}}
+    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    actions={[
+      <Icon type="instagram" theme="filled" key="setting" />,
+      <Icon type="linkedin" theme="filled" key="edit" />,
+      <Icon type="facebook" theme="filled" key="ellipsis" />,
+    ]}
+  
+  >
+   < Card.Meta title="Tarun Kumar" description="Stalk me bit to know about me..." />
+  </Card>
+  
+      </Drawer>
+    </div>
     );
 }
 
